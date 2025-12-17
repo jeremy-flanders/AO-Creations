@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AO Creations</title>
+  <script src="https://cdn.jsdelivr.net/npm/brython@3.11.3/brython.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/brython@3.11.3/brython_stdlib.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+    header {
+      text-align: center;
+      background: #333;
+      color: #fff;
+      padding: 40px 20px;
+    }
+
+    header h1 { font-size: 50px; margin: 0; }
+    header p { font-size: 22px; }
+
+    nav {
+      text-align: center;
+      background: #555;
+      padding: 10px 0;
+    }
+
+    nav button {
+      background: #777;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      margin: 5px;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    nav button:hover { background: #999; }
+
+    section {
+      display: none;
+      max-width: 700px;
+      margin: 20px auto;
+      background: #fff;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    h2 { margin-top: 0; }
+
+    #output { font-size: 36px; text-align: center; margin: 20px 0; }
+
+    button.general { padding: 10px 15px; margin: 5px; }
+    input.general { padding: 10px; margin: 5px; width: 100%; font-size: 18px; }
+
+    /* Simple Calculator Buttons */
+    #calc-buttons button { width: 60px; height: 50px; margin: 3px; font-size: 18px; }
+
+    /* Color Picker */
+    #color input { width: 50px; height: 30px; }
+  </style>
+</head>
+<body onload="brython()">
+
+<header>
+  <h1>AO Creations</h1>
+  <p>Click a project below to explore it!</p>
+</header>
+
+<!-- Navigation -->
+<nav>
+  <button id="btn-time">Live Time</button>
+  <button id="btn-quote">Quotes</button>
+  <button id="btn-calc">Calculator</button>
+  <button id="btn-sci-calc">Scientific Calc</button>
+  <button id="btn-color">Color Picker</button>
+</nav>
+
+<!-- Live Time -->
+<section id="time">
+  <h2>Live Time</h2>
+  <p id="output"></p>
+  <script type="text/python">
+from datetime import datetime
+from browser import document, timer
+
+def update_time():
+    now = datetime.now()
+    document["output"].text = now.strftime("%H:%M:%S")
+
+update_time()
+timer.set_interval(update_time, 1000)
+  </script>
+</section>
+
+<!-- Random Quotes -->
+<section id="quote">
+  <h2>Random Quote Generator</h2>
+  <p id="quote-text">Click the button to see a quote!</p>
+  <button id="new-quote">New Quote</button>
+  <script type="text/python">
+import random
+from browser import document
+
+quotes = [
+    "The only limit to our realization of tomorrow is our doubts of today.",
+    "Do something today that your future self will thank you for.",
+    "Success is not final, failure is not fatal: It is the courage to continue that counts.",
+    "In the middle of every difficulty lies opportunity.",
+    "Happiness is not something ready made. It comes from your own actions."
+"The only limit to our realization of tomorrow is our doubts of today.",
+"Do something today that your future self will thank you for.",
+"Success is not final, failure is not fatal: It is the courage to continue that counts.",
+"In the middle of every difficulty lies opportunity.",
+"Happiness is not something ready made. It comes from your own actions.",
+"Believe you can and you're halfway there.",
+"The best way to predict the future is to create it.",
+"Don't watch the clock; do what it does. Keep going.",
+"Everything you’ve ever wanted is on the other side of fear.",
+"Opportunities don't happen, you create them.",
+"Don't wait. The time will never be just right.",
+"Start where you are. Use what you have. Do what you can.",
+"Dream big and dare to fail.",
+"Act as if what you do makes a difference. It does.",
+"Quality is not an act, it is a habit.",
+"Success usually comes to those who are too busy to be looking for it.",
+"Do what you can, with what you have, where you are.",
+"The harder you work for something, the greater you’ll feel when you achieve it.",
+"Don’t stop when you’re tired. Stop when you’re done.",
+"Great things never come from comfort zones.",
+"Wake up with determination. Go to bed with satisfaction.",
+"Little things make big days.",
+"It’s going to be hard, but hard does not mean impossible.",
+"Don’t wait for opportunity. Create it.",
+"Sometimes we’re tested not to show our weaknesses, but to discover our strengths.",
+"The key to success is to focus on goals, not obstacles.",
+"Dream it. Wish it. Do it.",
+"Don’t limit your challenges. Challenge your limits.",
+"The best view comes after the hardest climb.",
+"Push yourself, because no one else is going to do it for you.",
+"Great things are done by a series of small things brought together.",
+"Don’t watch the clock; do what it does. Keep going.",
+"Success is not in what you have, but who you are.",
+"Small daily improvements over time lead to stunning results.",
+"Don’t be afraid to give up the good to go for the great.",
+"Success is walking from failure to failure with no loss of enthusiasm.",
+"Hardships often prepare ordinary people for an extraordinary destiny.",
+"Your limitation—it’s only your imagination.",
+"Push yourself, because no one else is going to do it for you.",
+"Sometimes later becomes never. Do it now.",
+"Great things never come from comfort zones.",
+"Dream bigger. Do bigger.",
+"Little progress is still progress.",
+"Don’t stop until you’re proud.",
+"Believe in yourself and all that you are.",
+"Do something today that your future self will thank you for.",
+"The secret of getting ahead is getting started.",
+"It always seems impossible until it’s done.",
+"Motivation is what gets you started. Habit is what keeps you going.",
+"The expert in anything was once a beginner.",
+"Don’t let yesterday take up too much of today.",
+"Everything you can imagine is real.",
+"Stay positive, work hard, make it happen.",
+"Success doesn’t just find you. You have to go out and get it.",
+"Great things take time. Be patient.",
+"The harder you work, the luckier you get.",
+"Don’t wait for the perfect moment. Take the moment and make it perfect.",
+"Your only limit is your mind.",
+"Success is not final, failure is not fatal: it is the courage to continue that counts.",
+"Believe in yourself. You are stronger than you think.",
+"You don’t have to be great to start, but you have to start to be great.",
+"Don’t quit. Suffer now and live the rest of your life as a champion.",
+"The future depends on what you do today.",
+"Make each day your masterpiece.",
+"Failure is the condiment that gives success its flavor.",
+"The way to get started is to quit talking and begin doing.",
+"Be not afraid of going slowly, be afraid only of standing still.",
+"Success is how high you bounce when you hit bottom.",
+"Don’t let what you cannot do interfere with what you can do.",
+"The only place where success comes before work is in the dictionary.",
+"If you want something you’ve never had, you must be willing to do something you’ve never done.",
+"Don’t count the days, make the days count.",
+"The man who moves a mountain begins by carrying away small stones.",
+"The journey of a thousand miles begins with one step.",
+"Work until your idols become your rivals.",
+"Whatever you are, be a good one.",
+"Action is the foundational key to all success.",
+"Success isn’t about the end result, it’s about what you learn along the way.",
+"Start each day with a positive thought and a grateful heart.",
+"The key to success is to focus our conscious mind on things we desire not things we fear.",
+"Don’t watch the clock; do what it does. Keep going.",
+"Success is not measured by money or power but by how many people you’ve helped.",
+"The harder the conflict, the greater the triumph.",
+"The difference between ordinary and extraordinary is that little extra.",
+"Don’t let fear of losing be greater than the excitement of winning.",
+"The best revenge is massive success.",
+"Go the extra mile. It’s never crowded there.",
+"The only way to achieve the impossible is to believe it is possible.",
+"Success is liking yourself, liking what you do, and liking how you do it.",
+"Don’t stop when you’re tired. Stop when you’re done.",
+"Opportunities don’t happen. You create them.",
+"Success seems to be connected with action. Successful people keep moving.",
+"You don’t find the happy life. You make it.",
+"Do what you love and never work a day in your life.",
+"Your passion is waiting for your courage to catch up.",
+"Success is the sum of small efforts, repeated day in and day out.",
+"Don’t wait for the opportunity. Create it.",
+"The expert in anything was once a beginner.",
+"Hard work beats talent when talent doesn’t work hard.",
+"Be so good they can’t ignore you.",
+"Don’t let small minds convince you that your dreams are too big.",
+"Little by little, a little becomes a lot.",
+"Work hard in silence, let your success be your noise.",
+"Dream big, work hard, stay focused, and surround yourself with good people.",
+"The key to success is to start before you are ready.",
+"Don’t stop until you’re proud.",
+"Act as if what you do makes a difference. It does.",
+"The secret of getting ahead is getting started.",
+"The best way to get something done is to begin.",
+"Success is not about being the best. It’s about always getting better.",
+"Don’t wish it were easier. Wish you were better.",
+"The only limit to our realization of tomorrow is our doubts of today.",
+"Do something today that your future self will thank you for.",
+"Success is not final, failure is not fatal: It is the courage to continue that counts.",
+"In the middle of every difficulty lies opportunity.",
+"Happiness is not something ready made. It comes from your own actions.",
+"Believe you can and you're halfway there.",
+"The best way to predict the future is to create it.",
+"Don’t watch the clock; do what it does. Keep going.",
+"Everything you’ve ever wanted is on the other side of fear.",
+"Opportunities don't happen, you create them.",
+"Don't wait. The time will never be just right.",
+"Start where you are. Use what you have. Do what you can.",
+"Dream big and dare to fail.",
+"Act as if what you do makes a difference. It does.",
+"Quality is not an act, it is a habit.",
+"Success usually comes to those who are too busy to be looking for it.",
+"Do what you can, with what you have, where you are.",
+"The harder you work for something, the greater you’ll feel when you achieve it.",
+"Don’t stop when you’re tired. Stop when you’re done.",
+"Great things never come from comfort zones.",
+"Wake up with determination. Go to bed with satisfaction.",
+"Little things make big days.",
+"It’s going to be hard, but hard does not mean impossible.",
+"Don’t wait for opportunity. Create it.",
+"Sometimes we’re tested not to show our weaknesses, but to discover our strengths.",
+"The key to success is to focus on goals, not obstacles.",
+"Dream it. Wish it. Do it.",
+"Don’t limit your challenges. Challenge your limits.",
+"The best view comes after the hardest climb.",
+"Push yourself, because no one else is going to do it for you.",
+"Great things are done by a series of small things brought together.",
+"Don’t watch the clock; do what it does. Keep going.",
+"Success is not in what you have, but who you are.",
+"Small daily improvements over time lead to stunning results.",
+"Don’t be afraid to give up the good to go for the great.",
+"Success is walking from failure to failure with no loss of enthusiasm.",
+"Hardships often prepare ordinary people for an extraordinary destiny.",
+"Your limitation—it’s only your imagination.",
+"Push yourself, because no one else is going to do it for you.",
+"Sometimes later becomes never. Do it now.",
+"Great things never come from comfort zones.",
+"Dream bigger. Do bigger.",
+"Little progress is still progress.",
+"Don’t stop until you’re proud.",
+"Believe in yourself and all that you are.",
+"Do something today that your future self will thank you for.",
+"The secret of getting ahead is getting started.",
+"It always seems impossible until it’s done.",
+"Motivation is what gets you started. Habit is what keeps you going.",
+"The expert in anything was once a beginner.",
+"Don’t let yesterday take up too much of today.",
+"Everything you can imagine is real.",
+"Stay positive, work hard, make it happen.",
+"Success doesn’t just find you. You have to go out and get it.",
+"Great things take time. Be patient.",
+"The harder you work, the luckier you get.",
+"Don’t wait for the perfect moment. Take the moment and make it perfect.",
+"Your only limit is your mind.",
+"Success is not final, failure is not fatal: it is the courage to continue that counts.",
+"Believe in yourself. You are stronger than you think.",
+"You don’t have to be great to start, but you have to start to be great.",
+"Don’t quit. Suffer now and live the rest of your life as a champion.",
+"The future depends on what you do today.",
+"Make each day your masterpiece.",
+"Failure is the condiment that gives success its flavor.",
+"The way to get started is to quit talking and begin doing.",
+"Be not afraid of going slowly, be afraid only of standing still.",
+"Success is how high you bounce when you hit bottom.",
+"Don’t let what you cannot do interfere with what you can do.",
+"The only place where success comes before work is in the dictionary.",
+"If you want something you’ve never had, you must be willing to do something you’ve never done.",
+"Don’t count the days, make the days count.",
+"The man who moves a mountain begins by carrying away small stones.",
+"The journey of a thousand miles begins with one step.",
+"Work until your idols become your rivals.",
+"Whatever you are, be a good one.",
+"Action is the foundational key to all success.",
+"Success isn’t about the end result, it’s about what you learn along the way.",
+"Start each day with a positive thought and a grateful heart.",
+"The key to success is to focus our conscious mind on things we desire not things we fear.",
+"Don’t watch the clock; do what it does. Keep going.",
+"Success is not measured by money or power but by how many people you’ve helped.",
+"The harder the conflict, the greater the triumph.",
+"The difference between ordinary and extraordinary is that little extra.",
+"Don’t let fear of losing be greater than the excitement of winning.",
+"The best revenge is massive success.",
+"Go the extra mile. It’s never crowded there.",
+"The only way to achieve the impossible is to believe it is possible.",
+"Success is liking yourself, liking what you do, and liking how you do it.",
+"Don’t stop when you’re tired. Stop when you’re done.",
+"Opportunities don’t happen. You create them.",
+"Success seems to be connected with action. Successful people keep moving.",
+"You don’t find the happy life. You make it.",
+"Do what you love and never work a day in your life.",
+"Your passion is waiting for your courage to catch up.",
+"Success is the sum of small efforts, repeated day in and day out.",
+"Don’t wait for the opportunity. Create it.",
+"The expert in anything was once a beginner.",
+"Hard work beats talent when talent doesn’t work hard.",
+"Be so good they can’t ignore you.",
+"Don’t let small minds convince you that your dreams are too big.",
+"Little by little, a little becomes a lot.",
+"Work hard in silence, let your success be your noise.",
+"Dream big, work hard, stay focused, and surround yourself with good people.",
+"The key to success is to start before you are ready.",
+"Don’t stop until you’re proud.",
+"Act as if what you do makes a difference. It does.",
+"The secret of getting ahead is getting started.",
+"The best way to get something done is to begin.",
+"Success is not about being the best. It’s about always getting better.",
+"Don’t wish it were easier. Wish you were better."
+]
+
+def new_quote(event):
+    document["quote-text"].text = random.choice(quotes)
+
+document["new-quote"].bind("click", new_quote)
+  </script>
+</section>
+
+<!-- Simple Calculator -->
+<section id="calc">
+  <h2>Simple Calculator</h2>
+  <input id="calc-display" readonly>
+  <div id="calc-buttons">
+    <button>7</button><button>8</button><button>9</button><button>/</button>
+    <button>4</button><button>5</button><button>6</button><button>*</button>
+    <button>1</button><button>2</button><button>3</button><button>-</button>
+    <button>0</button><button>.</button><button>C</button><button>+</button>
+    <button>=</button>
+  </div>
+  <p id="calc-result"></p>
+  <script type="text/python">
+from browser import document
+
+display = document["calc-display"]
+result_p = document["calc-result"]
+
+def btn_click(event):
+    val = event.target.text
+    if val == "C":
+        display.value = ""
+        result_p.text = ""
+    elif val == "=":
+        try:
+            result = eval(display.value)
+            result_p.text = str(result)
+            display.value = ""
+        except Exception as e:
+            result_p.text = "Error"
+    else:
+        display.value += val
+
+for b in document["calc-buttons"].get(selector="button"):
+    b.bind("click", btn_click)
+  </script>
+</section>
+
+<!-- Scientific Calculator (Casio Style) -->
+<section id="sci-calc">
+  <h2>Scientific Calculator</h2>
+  <input id="sci-display" readonly>
+  <div id="sci-buttons">
+    <!-- Row 1 -->
+    <button class="func">s↔d</button><button class="func">C</button><button>(</button><button>)</button><button class="func">1/x</button>
+    <!-- Row 2 -->
+    <button>7</button><button>8</button><button>9</button><button>/</button><button class="func">sqrt</button>
+    <!-- Row 3 -->
+    <button>4</button><button>5</button><button>6</button><button>*</button><button class="func">x!</button>
+    <!-- Row 4 -->
+    <button>1</button><button>2</button><button>3</button><button>-</button><button class="func">log</button>
+    <!-- Row 5 -->
+    <button>0</button><button>.</button><button class="func">pi</button><button>+</button><button class="func">ln</button>
+    <!-- Row 6 -->
+    <button class="func">sin</button><button class="func">cos</button><button class="func">tan</button><button class="func">e</button><button id="sci-equals">=</button>
+    <!-- Row 7 -->
+    <button class="func" id="ans-btn">Ans</button>
+  </div>
+  <p id="sci-result"></p>
+
+  <style>
+    #sci-buttons {
+      display: grid;
+      grid-template-columns: repeat(5, 60px);
+      gap: 5px;
+    }
+    #sci-buttons button {
+      width: 60px; height: 50px; font-size: 16px;
+      border-radius: 5px; border: none; cursor: pointer;
+      color: white; background: black;
+    }
+    #sci-buttons button.func { background: #FFD700; color: black; }
+    #sci-display { width: 310px; height: 40px; font-size: 20px; text-align: right; margin-bottom: 10px; }
+    #sci-result { text-align: right; font-size: 18px; color: green; }
+  </style>
+
+  <script type="text/python">
+from browser import document
+import math
+from fractions import Fraction
+
+display = document["sci-display"]
+result_p = document["sci-result"]
+show_fraction = True
+last_answer = None  # store last calculation
+
+def toggle_fraction(event):
+    global show_fraction, last_answer
+    if last_answer is not None:
+        if show_fraction:
+            result_p.text = str(Fraction(last_answer).limit_denominator())
+        else:
+            result_p.text = str(last_answer)
+        show_fraction = not show_fraction
+
+def safe_eval(expr):
+    # map functions
+    def sin(x): return math.sin(x)
+    def cos(x): return math.cos(x)
+    def tan(x): return math.tan(x)
+    def log(x): return math.log10(x)
+    def ln(x): return math.log(x)
+    def sqrt(x): return math.sqrt(x)
+    def factorial(x): return math.factorial(int(x))
+    
+    allowed = {"sin": sin, "cos": cos, "tan": tan, "log": log, "ln": ln, "sqrt": sqrt,
+               "pi": math.pi, "e": math.e, "pow": pow, "factorial": factorial}
+    return eval(expr, {"__builtins__": None}, allowed)
+
+def btn_click(event):
+    global show_fraction, last_answer
+    val = event.target.text
+    if val == "C":
+        display.value = ""
+        result_p.text = ""
+    elif val == "=":
+        try:
+            expr = display.value
+            expr = expr.replace("x!", "factorial(")
+            expr = expr.replace("%", "/100")
+            expr += ")"*expr.count("(")
+            res = safe_eval(expr)
+            last_answer = res
+            # show as fraction initially
+            try:
+                result_p.text = str(Fraction(res).limit_denominator())
+                show_fraction = True
+            except:
+                result_p.text = str(res)
+                show_fraction = False
+            display.value = ""
+        except:
+            result_p.text = "Error"
+    elif val == "s↔d":
+        toggle_fraction(event)
+    elif val == "Ans":
+        if last_answer is not None:
+            display.value += str(last_answer)
+    elif val == "pi":
+        display.value += "pi"
+    elif val == "e":
+        display.value += "e"
+    elif val == "x!":
+        display.value += "x!"
+    elif val in ["sin","cos","tan","log","ln","sqrt"]:
+        display.value += val + "("
+    else:
+        display.value += val
+
+for b in document["sci-buttons"].get(selector="button"):
+    b.bind("click", btn_click)
+  </script>
+</section>
+
+<!-- Color Picker -->
+<section id="color">
+  <h2>Color Picker</h2>
+  <input type="color" id="color-input">
+  <p id="color-output">Pick a color to see its value!</p>
+  <script type="text/python">
+from browser import document
+
+def show_color(event):
+    color = document["color-input"].value
+    document["color-output"].text = f"Selected color: {color}"
+    document["color-output"].style.color = color
+
+document["color-input"].bind("input", show_color)
+  </script>
+</section>
+
+<!-- Navigation functionality -->
+<script type="text/python">
+from browser import document
+
+sections = ["time", "quote", "calc", "sci-calc", "color"]
+buttons = ["btn-time", "btn-quote", "btn-calc", "btn-sci-calc", "btn-color"]
+
+def show_section(event):
+    for sec in sections:
+        document[sec].style.display = "none"
+    btn_id = event.target.id
+    index = buttons.index(btn_id)
+    document[sections[index]].style.display = "block"
+
+for btn in buttons:
+    document[btn].bind("click", show_section)
+</script>
+
+</body>
+</html>
